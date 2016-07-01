@@ -1,0 +1,24 @@
+.ui.center{
+	text-align: center;
+}
+body {
+	position: relative;
+}
+.container {
+	padding-top: 50px;
+	margin: auto;
+}
+.template {
+	padding-top: 50px;
+}
+.template#login {
+	max-width: 25%;
+	margin: auto;
+}
+.template .login.input {
+	padding-top: 10px;
+}
+.template .login.enter {
+	text-align: center;
+	width: 100%;
+}

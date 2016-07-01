@@ -1,0 +1,25 @@
+<div class="template" id="login">
+	<form class="ui grey inverted segment form error" id="loginForm" ng-submit="login()">
+		<div class="ui center grey inverted basic segment"><h1><strong>Login</strong></h1></div>
+		<div class="ui error message" ng-show="error.message" ng-bind="loginForm.message"></div>
+		<div class="field" ng-class="setError(error.name)" id="nameForm">
+			<span class="ui label">
+				<i class="user icon"></i>Name
+			</span>
+			<div class="login input">
+				<input ng-model="loginForm.name" type="text" placeholder="Name">
+			</div>
+		</div>
+		<div class="field" ng-class="setError(error.password)" id="passwordForm">
+			<span class="ui label">
+				<i class="lock icon"></i>Password
+			</span>
+			<div class="login input">
+				<input ng-model="loginForm.password" type="password" placeholder="Password">
+			</div>
+		</div>
+		<div class="login enter">
+			<input class="ui circular inverted button grey" type="submit" value="Login">
+		</div>
+	</form>
+</div>
