@@ -18,6 +18,11 @@
   },
   "homepage": "https://github.com/8497107117/Jobs-Bank#readme",
   "dependencies": {
-    "webpack": "^1.13.2",
+    "angular": "^1.5.8",
+    "angular-messages": "^1.5.8",
+    "angular-route": "^1.5.8",
+    "css-loader": "^0.25.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2"
   }
 }
