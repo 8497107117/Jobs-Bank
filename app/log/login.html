@@ -1,0 +1,34 @@
+<div class="view" id="login">
+	<form class="ui grey inverted segment form error" id="loginForm" name="lF" ng-init="Login.init(lF)" ng-submit="Login.login()">
+		<div class="ui center grey inverted basic segment"><h1><strong>Login</strong></h1></div>
+		<div class="ui error message" ng-show="Login.fail">Login fail</div>
+		<div class="field" ng-class="Login.setError(lF.name.$invalid && lF.name.$dirty)">
+			<span class="ui label">
+				<i class="user icon"></i>Name
+			</span>
+			<div class="login input">
+				<input name="name" ng-model="Login.lForm.name" ng-model-options="{updateOn:'blur'}" type="text" placeholder="Name" ng-pattern="/^[A-Za-z]\w{3,15}$/" required>
+			</div>
+			<div class="ui error message" ng-messages="lF.name.$error" ng-show="lF.name.$dirty && lF.name.$invalid">
+				<p ng-message="required">Please enter your name</p>
+				<p ng-message="pattern">Only characters and numbers. Character prefix. 4 to 16 length</p>
+			</div>
+		</div>
+		<div class="field" ng-class="Login.setError(lF.password.$invalid && lF.password.$dirty)">
+			<span class="ui label">
+				<i class="lock icon"></i>Password
+			</span>
+			<div class="login input">
+				<input name="password" ng-model="Login.lForm.password" ng-model-options="{updateOn:'blur'}" type="password" placeholder="Password" ng-pattern="/^[A-Za-z0-9]{4,16}$/" required>
+			</div>
+			<div class="ui error message" ng-messages="lF.password.$error" ng-show="lF.password.$dirty && lF.password.$invalid">
+				<p ng-message="required">Please enter your password</p>
+				<p ng-message="pattern">Only characters and numbers. 4 to 16 length</p>
+			</div>
+		</div>
+		<div class="login enter">
+			<input class="ui circular inverted button grey" type="submit" value="Login" ng-disabled="lF.$invalid">
+			<input class="ui circular inverted button red" type="button" value="Clear" ng-click="Login.init(lF)">
+		</div>
+	</form>
+</div>

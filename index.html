@@ -1,54 +1,61 @@
 <!DOCTYPE>
-<html ng-app="bank" ng-controller="controller">
+<html ng-app="Bank" ng-controller="PageCtrl as Page">
 	<head>
-		<title>{{config.title}} | {{currentPage.name}}</title>
+		<title>{{Page.config.title}} | {{Page.currentPage.name}}</title>
 
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 
-		<meta property="og:url" content="http://people.cs.nctu.edu.tw/~ycchen0216023/bank/"/>
+		<meta property="og:url" content="taku.nctu.cs.net/404bank/"/>
 		<meta property="og:title" content="404 Not Found Bank"/>
 		<meta property="og:description" content="mystery"/>
 
 		<!--jQuery-->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.2/jquery.min.js"></script>
-		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-		<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-		<!--AngularJS-->
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-sanitize.min.js""></script>
-		<!--Css-->
-		<link rel="stylesheet" type="text/css" href="css/style.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 		<!--Bank-->
-		<script src="js/bank.js"></script>
-		<script src="js/controller.js"></script>
+		<script src="build/bundle.js"></script>
+		<!--Semantic-->
+		<script src="semantic/semantic.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
 	</head>
 	<body>
 		<nav class="ui fixed grey inverted borderless menu" id="navbar">
-			<a class="header item" href="./#!/">{{config.title}} | {{currentPage.name}}</a>
+			<a class="header item" href="./#!/">{{Page.config.title}} | {{Page.currentPage.name}}</a>
 			<div class="right menu">
-				<span class="item" ng-repeat-start="info in navInfo" ng-if="!info.href && !info.menu" ng-bind-html="info.name">
-					<i class="{{info.icon}} icon" ng-if="info.icon"></i>{{info.name}}
-				</span>
-				<a class="item" ng-href="{{info.href}}" ng-if="info.href">
-					<i class="{{info.icon}} icon" ng-if="info.icon"></i>{{info.name}}
+				<a class="item" href="#!/jobsList" ng-hide="Page.Auth.getStatus().isLogin">
+					<i class="list icon"></i>Jobs
 				</a>
-				<div class="ui dropdown item" ng-repeat-end ng-if="info.menu" on-finish-render="triggerDropdown">
-					<i class="{{info.icon}} icon" ng-if="info.icon"></i>{{info.name}}
+				<div class="ui dropdown item" ng-hide="Page.Auth.getStatus().isLogin" on-finish-render="triggerDropdown">
+					<i class="add user icon"></i>Join us
 					<div class="menu">
-						<a class="item" ng-href="{{subInfo.href}}" ng-repeat="subInfo in info.menu">
-							{{subInfo.name}}
-						</a>
+						<a class="item" href="#!/register/user">user</a>
+						<a class="item" href="#!/register/boss">boss</a>
 					</div>
 				</div>
+				<a class="item" href="#!/login" ng-hide="Page.Auth.getStatus().isLogin">
+					<i class="sign in icon"></i>Login
+				</a>
+				<span class="item" ng-show="Page.Auth.getStatus().isLogin">
+					<p>Hi {{Page.Auth.getStatus().name}}</p>
+				</span>
+				<div class="ui dropdown item" ng-show="Page.Auth.getStatus().isLogin" on-finish-render="triggerDropdown">
+					<i class="list icon"></i>Jobs
+					<div class="menu">
+						<a class="item" href="#!/jobsList">List All Jobs</a>
+						<a class="item" href="#!/myJobs" ng-show="Page.Auth.getStatus().type == 'boss'">List My Jobs</a>
+						<a class="item" href="#!/favoriteList" ng-show="Page.Auth.getStatus().type == 'user'">My Favorite Jobs</a>
+					</div>
+				</div>
+				<a class="item" href="#!/usersList" ng-show="Page.Auth.getStatus().isLogin && Page.Auth.getStatus().type == 'boss'">
+					<i class="sign out icon"></i>Users
+				</a>
+				<a class="item" href="#!/logout" ng-show="Page.Auth.getStatus().isLogin">
+					<i class="sign out icon"></i>Logout
+				</a>
 			</div>
 		</nav>
 		<div class="container">
 			<div ng-view></div>
 		</div>
 	</body>
-	<!--Semantic-->
-	<script src="semantic/semantic.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css">
 </html>

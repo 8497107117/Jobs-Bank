@@ -9,11 +9,11 @@
 		$db = getPDO();
 		$userSql = "SELECT * FROM User WHERE account = ? and password = ?";
 		$userSth = $db->prepare($userSql);
-		$userSth->execute(array($name, $pass));
+		$userSth->execute(array($name, hash(SHA256, $pass)));
 		$userResult = $userSth->fetch();
 		$bossSql = "SELECT * FROM Boss WHERE account = ? and password = ?";
 		$bossSth = $db->prepare($bossSql);
-		$bossSth->execute(array($name, $pass));
+		$bossSth->execute(array($name, hash(SHA256, $pass)));
 		$bossResult = $bossSth->fetch();
 
 		if($userResult){
@@ -36,6 +36,5 @@
 
 		return $response;
 	}
-
 	echo json_encode(login($obj->name, $obj->password));
 ?>

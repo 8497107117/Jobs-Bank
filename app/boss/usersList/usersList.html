@@ -1,0 +1,36 @@
+<div class="view" id="usersList">
+	<table class="ui center aligned stackable selectable striped inverted grey table">
+		<thead>
+			<tr class="center aligned">
+				<th>User ID</th>
+				<th>Name</th>
+				<th>Level</th>
+				<th>Expected Salary per month</th>
+				<th>Phone</th>
+				<th>Gender</th>
+				<th>Age</th>
+				<th>Email</th>
+				<th>Specialty</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="user in UsersList.users">
+				<td class="center aligned" ng-repeat-start="(k, v) in user" ng-if="!UsersList.divide(v)">{{v}}</td>
+				<td class="center aligned" ng-repeat-end ng-if="UsersList.divide(v)">
+					<div class="ui black buttons">
+						<div class="ui button">specialty</div>
+						<div class="ui compact floating dropdown icon button" on-finish-render="triggerDropdown">
+							<i class="dropdown icon"></i>
+							<div class="menu">
+								<div class="header">What he/she has</div>
+								<div class="divider"></div>
+								<div class="item" ng-if="UsersList.isNull(v)">NONE</div>
+								<div class="item" ng-repeat="spe in v">{{spe}}</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

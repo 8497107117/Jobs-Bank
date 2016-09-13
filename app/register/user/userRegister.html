@@ -1,0 +1,130 @@
+<div class="view" id="register">
+	<form class="ui grey inverted segment form error" id="userRegisterForm" name="uRF" ng-init="UserRegister.init(uRF)" ng-submit="UserRegister.register()">
+		<div class="ui center grey inverted basic segment"><h1><strong>Join us</strong></h1></div>
+		<div class="three fields">
+			<div class="field" ng-class="UserRegister.setError(uRF.name.$invalid && uRF.name.$dirty)">
+				<label>User name</label>
+				<div class="ui left icon input">
+					<input name="name" ng-model="UserRegister.rForm.name" ng-model-options="{updateOn:'blur'}" type="text" placeholder="User name" ng-pattern="/^[A-Za-z]\w{3,15}$/" required check-name>
+					<i class="user icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.name.$error" ng-show="uRF.name.$dirty && uRF.name.$invalid">
+					<p ng-message="required">Please enter your name</p>
+					<p ng-message="nameExist">This name has existed</p>
+					<p ng-message="pattern">Only characters and numbers. Character prefix. 4 to 16 length</p>
+				</div>
+			</div>
+			<div class="field" ng-class="UserRegister.setError(uRF.password.$invalid && uRF.password.$dirty)">
+				<label>Password</label>
+				<div class="ui left icon input">
+					<input name="password" ng-model="UserRegister.rForm.password" ng-model-options="{updateOn:'blur'}" type="password" placeholder="Password" ng-pattern="/^[A-Za-z0-9]{4,16}$/" required>
+					<i class="privacy icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.password.$error" ng-show="uRF.password.$dirty && uRF.password.$invalid">
+					<p ng-message="required">Please enter your password</p>
+					<p ng-message="pattern">Only characters and numbers. 4 to 16 length</p>
+				</div>
+			</div>
+			<div class="field" ng-class="UserRegister.setError(uRF.verify.$invalid && uRF.verify.$dirty)">
+				<label>Verify password</label>
+				<div class="ui left icon input">
+					<input name="verify" ng-model="UserRegister.rForm.verify" ng-model-options="{updateOn:'blur'}" type="password" placeholder="Password again" required check-verify>
+					<i class="protect icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.verify.$error" ng-show="uRF.verify.$dirty && uRF.verify.$invalid">
+					<p ng-message="required">Please enter your password again</p>
+					<p ng-message="samePass">Should be the same as your password</p>
+				</div>
+			</div>
+		</div>
+		<div class="three fields">
+			<div class="field" ng-class="UserRegister.setError(uRF.phone.$invalid && uRF.phone.$dirty)">
+				<label>Phone</label>
+				<div class="ui left icon input">
+					<input name="phone" ng-model="UserRegister.rForm.phone" ng-model-options="{updateOn:'blur'}" type="text" placeholder="09XX-XXX-XXX" ng-pattern="/^0[0-9]{9}$/" required>
+					<i class="phone icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.phone.$error" ng-show="uRF.phone.$dirty && uRF.phone.$invalid">
+					<p ng-message="required">Please enter your phone</p>
+					<p ng-message="pattern">Should have 10 numbers with 0 prefix</p>
+				</div>
+			</div>
+			<div class="field" ng-class="UserRegister.setError(uRF.email.$invalid && uRF.email.$dirty)">
+				<label>Email</label>
+				<div class="ui left icon input">
+					<input name="email" ng-model="UserRegister.rForm.email" ng-model-options="{updateOn:'blur'}" type="email" placeholder="xxx@site.com" ng-pattern="/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i" required>
+					<i class="mail icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.email.$error" ng-show="uRF.email.$dirty && uRF.email.$invalid">
+					<p ng-message="required">Please enter your email</p>
+					<p ng-message="pattern">Please enter correct email</p>
+				</div>
+			</div>
+			<div class="field">
+				<label>Gender</label>
+				<div class="ui left icon selection dropdown">
+					<input name="gender" ng-model="UserRegister.rForm.gender" type="hidden" required>
+					<i class="heterosexual icon"></i>
+					<div class="default text">Gender</div>
+					<div class="menu">
+						<div class="item" data-value="{{gender}}" ng-repeat="gender in UserRegister.selectionData.gender" ng-click="UserRegister.getSelectValue('gender',gender)" on-finish-render="triggerDropdown">{{gender}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="three fields">
+			<div class="field" ng-class="UserRegister.setError(uRF.age.$invalid && uRF.age.$dirty)">
+				<label>Age</label>
+				<div class="ui left icon input">
+					<input name="age" ng-model="UserRegister.rForm.age" ng-model-options="{updateOn:'blur'}" type="number" placeholder="Age" value="0" min="0" ng-pattern="/^[1-9][0-9]{0,2}$/" required>
+					<i class="child icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.age.$error" ng-show="uRF.age.$dirty && uRF.age.$invalid">
+					<p ng-message="required">Please enter your age</p>
+					<p ng-message="number">It's not a number</p>
+					<p ng-message="pattern">Please enter correct age</p>
+				</div>
+			</div>
+			<div class="field" ng-class="UserRegister.setError(uRF.salary.$invalid && uRF.salary.$dirty)">
+				<label>Expected Salary per month</label>
+				<div class="ui left icon input">
+					<input name="salary" ng-model="UserRegister.rForm.salary" ng-model-options="{updateOn:'blur'}" type="number" placeholder="Expected Salary" value="0" min="0" step="1000" ng-pattern="/^[1-9][0-9]*/" required>
+					<i class="dollar icon"></i>
+				</div>
+				<div class="ui error message" ng-messages="uRF.salary.$error" ng-show="uRF.salary.$dirty && uRF.salary.$invalid">
+					<p ng-message="required">Please enter your expected salary</p>
+					<p ng-message="number">It's not a number</p>
+					<p ng-message="pattern">Please enter correct number</p>
+				</div>
+			</div>
+			<div class="field">
+				<label>Level</label>
+				<div class="ui left icon selection dropdown">
+					<input name="level" ng-model="UserRegister.rForm.level" type="hidden" required>
+					<i class="align left icon"></i>
+					<div class="default text">Level</div>
+					<div class="menu">
+						<div class="item" data-value="{{level}}" ng-repeat="level in UserRegister.selectionData.level" ng-click="UserRegister.getSelectValue('level', level)" on-finish-render="triggerDropdown">{{level}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="fields">
+			<div class="sixteen wide field">
+				<label>Specialty</label>
+				<div class="ui left icon multiple selection dropdown">
+					<input name="specialty" ng-model="UserRegister.rForm.specialty" type="hidden">
+					<i class="tasks left icon"></i>
+					<div class="default text">Specialty</div>
+					<div class="menu">
+						<div class="item" data-value="{{$index + 1}}" ng-repeat="specialty in UserRegister.selectionData.specialty" on-finish-render="triggerDropdown">{{specialty}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="register enter">
+			<input class="ui circular inverted button grey" type="submit" value="Register" ng-disabled="uRF.$invalid">
+			<input class="ui circular inverted button red" type="button" value="Clear" ng-click="UserRegister.init(uRF)">
+		</div>
+	</form>
+</div>

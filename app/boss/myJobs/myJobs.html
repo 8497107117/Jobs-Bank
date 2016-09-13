@@ -1,0 +1,43 @@
+<div class="view" id="myJobsList">
+	<div class="ui stacked segment" ng-repeat="(j, job) in MyJobs.jobs" ng-if="j!='success'">
+		<div class="ui big ribbon label">{{job.occupation}} @ {{job.location}}</div>
+		<table class="ui center aligned stackable selectable striped fixed inverted grey table">
+			<tbody>
+				<tr class="center aligned">
+					<td ng-repeat="(boss, bAttr) in job" ng-if="MyJobs.showAttr(boss) && boss != 'experience' && boss != 'salary'">{{bAttr}}</td>
+					<td ng-repeat="(boss, bAttr) in job" ng-if="MyJobs.showAttr(boss) && boss == 'experience'">{{bAttr}} year(s)</td>
+					<td ng-repeat="(boss, bAttr) in job" ng-if="MyJobs.showAttr(boss) && boss == 'salary'">${{bAttr}}</td>
+					<td>
+						<div class="ui animated fade brown button" ng-click="MyJobs.deleteJob($index, job.id)">
+							<div class="visible content"><i class="remove icon"></i></div>
+							<div class="hidden content">Delete</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<table class="ui center aligned stackable selectable striped fixed inverted grey table">
+			<thead>
+			</thead>
+			<tbody>
+				<tr class="center aligned" ng-repeat="user in job.whoApply">
+					<td ng-repeat="(u, uAttr) in user" ng-if="MyJobs.showAttr(u)">{{uAttr}}</td>
+					<td ng-repeat="(u, uAttr) in user" ng-if="!MyJobs.showAttr(u)">
+						<div class="ui black buttons">
+							<div class="ui button">specialty</div>
+							<div class="ui compact floating dropdown icon button" on-finish-render="triggerDropdown">
+								<i class="dropdown icon"></i>
+								<div class="menu">
+									<div class="header">What he/she has</div>
+									<div class="divider"></div>
+									<div class="item" ng-if="MyJobs.isNull(uAttr)">NONE</div>
+									<div class="item" ng-repeat="spe in uAttr">{{spe}}</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -1,0 +1,24 @@
+{
+  "name": "404bank",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/8497107117/Jobs-Bank.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/8497107117/Jobs-Bank/issues"
+  },
+  "homepage": "https://github.com/8497107117/Jobs-Bank#readme",
+  "dependencies": {
+    "webpack": "^1.13.2",
+    "webpack-uglify-js-plugin": "^1.1.9"
+  }
+}

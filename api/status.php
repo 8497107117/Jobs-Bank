@@ -4,13 +4,17 @@
 	function status(){
 		if(isset($_SESSION['loginData'])){
 			$response = array(
-				"success" => true,
 				"isLogin" => true,
+				"id" => $_SESSION['loginData']['id'],
 				"name" => $_SESSION['loginData']['account'],
 				"type" => $_SESSION['loginData']['type']);
 		}
 		else{
-			$response = array("success" => true, "isLogin" => false);
+			$response = array(
+				"isLogin" => false,
+				"id" => "",
+				"name" => "",
+				"type" => "");
 		}
 		return $response;
 	}

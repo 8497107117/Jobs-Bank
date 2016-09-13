@@ -1,0 +1,194 @@
+<div class="view" id="jobsList">
+	<table class="ui center aligned stackable selectable striped inverted grey table">
+		<thead>
+			<tr class="center aligned">
+				<th>Job ID</th>
+				<th>Occupation</th>
+				<th>Location</th>
+				<th>Working Time</th>
+				<th>Level Required</th>
+				<th>Minimal Experience (year)</th>
+				<th>
+					<a href ng-click="JobsList.changeSortOrder(true)"><i class="caret up icon"></i></a>
+					&nbsp;Salary per month&nbsp;
+					<a href ng-click="JobsList.changeSortOrder(false)"><i class="caret down icon"></i></a>
+				</th>
+				<th>Operation</th>
+			</tr>
+		</thead>
+		<tbody>
+			<!--Search-->
+			<tr class="ui form" id="search" ng-init="JobsList.initSearch()">
+				<td></td>
+				<td class="field" ng-repeat="s in JobsList.searchOptions" ng-if="!JobsList.divideType(s)">
+					<div class="ui compact selection dropdown">
+						<input name="{{s}}" ng-model="JobsList.sJob[s]" type="hidden">
+						<div class="default text">{{s}}</div>
+						<div class="menu">
+							<div class="item" data-value="" ng-click="JobsList.getSelectValue('search', s, '')">--</div>
+							<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData[s]" ng-click="JobsList.getSelectValue('search', s, data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						<input name="experience" ng-model="JobsList.sJob.experience" type="number" min="0" placeholder="experience">
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						<input name="salary" ng-model="JobsList.sJob.salary" type="number" min="0" placeholder="salary">
+					</div>
+				</td>
+				<td>
+					<div class="ui buttons">
+						<div class="ui animated fade black button" ng-click="JobsList.initSearch()">
+							<div class="visible content"><i class="undo icon"></i></div>
+							<div class="hidden content">Reset</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<!--jobsList-->
+			<tr class="ui form" id="jobsList" name="jL" ng-repeat="job in JobsList.jobs | filter:JobsList.search(JobsList.sJob) | orderBy:JobsList.sortOrder">
+				<td class="center aligned">{{job.id}}</td>
+				<!-- No Login -->
+				<td class="center aligned" ng-hide="job.editPattern" ng-repeat="(k, v) in job" ng-if="JobsList.divide(k)">{{v}}</td>
+				<!-- Login -->
+				<td class="center aligned" ng-show="job.editPattern" ng-repeat="(k, v) in job" ng-if="JobsList.divide(k)">
+					<div class="field" ng-show="JobsList.divideType(k)">
+						<div class="ui input {{k}}">
+							<input name="{{k}}" ng-model="JobsList.eJob[k]" type="number" step="{{JobsList.setStep(k)}}" min="0" string-to-number required>
+						</div>
+					</div>
+					<div class="field" ng-hide="JobsList.divideType(k)">
+						<div class="ui compact selection dropdown">
+							<input name="{{k}}" ng-model="JobsList.eJob[k]" value="{{v}}" type="hidden" required>
+							<div class="default text">{{k}}</div>
+							<div class="menu">
+								<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData[k]" ng-click="JobsList.getSelectValue('edit', k, data)" on-finish-render="triggerDropdown">{{data}}</div>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="ui buttons" ng-show="JobsList.Auth.getStatus().type == 'user'">
+						<div ng-hide="job.apply">
+							<div class="ui animated fade button" ng-class="JobsList.setToggle(job.favorite)" ng-click="JobsList.setFavorite($index, job.id)" >
+								<div class="visible content"><i class="star icon"></i></div>
+								<div class="hidden content">
+									<span ng-show="!job.favorite">Star</span>
+									<span ng-show="job.favorite">Un Star</span>
+								</div>
+							</div>
+							<div class="ui animated fade button" ng-click="JobsList.setApply($index, job.id)">
+								<div class="visible content"><i class="checkmark icon"></i></div>
+								<div class="hidden content">Apply</div>
+							</div>
+						</div>
+						<div ng-show="job.apply">
+							<div class="ui animated fade button" ng-class="JobsList.setToggle(job.favorite)" ng-click="JobsList.setFavorite($index, job.id)" >
+								<div class="visible content"><i class="star icon"></i></div>
+								<div class="hidden content">
+									<span ng-show="!job.favorite">Star</span>
+									<span ng-show="job.favorite">Un Star</span>
+								</div>
+							</div>
+							<div class="ui animated fade button" ng-click="JobsList.setApply($index, job.id)">
+								<div class="visible content"><i class="radio icon"></i></div>
+								<div class="hidden content">Wait</div>
+							</div>
+						</div>
+					</div>
+					<div class="ui buttons" ng-show="JobsList.Auth.getStatus().type == 'boss' && job.edit">
+						<div ng-hide="job.editPattern">
+							<div class="ui animated fade black button" ng-click="JobsList.changeEditPattern($index)">
+								<div class="visible content"><i class="edit icon"></i></div>
+								<div class="hidden content">Edit</div>
+							</div>
+						</div>
+						<div ng-show="job.editPattern">
+							<div class="ui animated fade white button" ng-click="JobsList.editJob($index, job.id)">
+								<div class="visible content"><i class="checkmark icon"></i></div>
+								<div class="hidden content">Ok</div>
+							</div>
+							<div class="ui animated fade black button" ng-click="JobsList.changeEditPattern($index)">
+								<div class="visible content"><i class="undo icon"></i></div>
+								<div class="hidden content">Cancel</div>
+							</div>
+							<div class="ui animated fade brown button" ng-click="JobsList.deleteJob($index, job.id)">
+								<div class="visible content"><i class="remove icon"></i></div>
+								<div class="hidden content">Delete</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div ng-show="JobsList.Auth.getStatus().type == 'boss'">
+		<form class="ui form error" id="postForm" name="pF" ng-init="JobsList.initPost()">
+			<div class="three fields" ng-show="JobsList.postPattern">
+				<div class="field">
+					<div class="ui compact selection dropdown">
+						<input name="occupation" ng-model="JobsList.pJob.occupation" type="hidden" required>
+						<div class="default text">occupation</div>
+						<div class="menu">
+							<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData.occupation" ng-click="JobsList.getSelectValue('post', 'occupation', data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui compact selection dropdown">
+						<input name="location" ng-model="JobsList.pJob.location" type="hidden" required>
+						<div class="default text">location</div>
+						<div class="menu">
+							<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData.location" ng-click="JobsList.getSelectValue('post', 'location', data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="field">
+					<div class="ui compact selection dropdown">
+						<input name="workingTime" ng-model="JobsList.pJob.workingTime" type="hidden" required>
+						<div class="default text">workingTime</div>
+						<div class="menu">
+							<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData.workingTime" ng-click="JobsList.getSelectValue('post', 'workingTime', data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="three fields" ng-show="JobsList.postPattern">
+				<div class="field">
+					<div class="ui compact selection dropdown">
+						<input name="level" ng-model="JobsList.pJob.level" type="hidden" required>
+						<div class="default text">level</div>
+						<div class="menu">
+							<div class="item" data-value="{{data}}" ng-repeat="data in JobsList.selectionData.level" ng-click="JobsList.getSelectValue('post', 'level', data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="field" ng-class="JobsList.setError(pF.experience.$invalid && pF.experience.$dirty)">
+					<div class="ui input" id="experience">
+						<input name="experience" ng-model="JobsList.pJob.experience" type="number" min="0" placeholder="experience" required>
+					</div>
+				</div>
+				<div class="field" ng-class="JobsList.setError(pF.salary.$invalid && pF.salary.$dirty)">
+					<div class="ui input">
+						<input name="salary" ng-model="JobsList.pJob.salary" type="number" step="1000" min="0" placeholder="salary" required>
+					</div>
+				</div>
+			</div>
+			<div class="post enter" ng-show="JobsList.postPattern && pF.$valid">
+				<div class="ui circular animated fade button" ng-click="JobsList.postJob()">
+					<div class="visible content"><i class="add icon"></i></div>
+					<div class="hidden content">New</div>
+				</div>
+			</div>
+			<div class="post enter">
+				<div class="ui circular labeled icon inverted brown button" ng-click="JobsList.changePostPattern(pF)">
+					<i class="add icon"></i>New
+				</div>
+			</div>
+		</form>
+	</div>
+</div>

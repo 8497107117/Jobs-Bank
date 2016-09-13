@@ -1,0 +1,88 @@
+<div class="view" id="favoriteList">
+	<table class="ui center aligned stackable selectable striped inverted grey table">
+		<thead>
+			<tr class="center aligned">
+				<th>Job ID</th>
+				<th>Occupation</th>
+				<th>Location</th>
+				<th>Working Time</th>
+				<th>Level Required</th>
+				<th>Minimal Experience (year)</th>
+				<th>
+					<a href ng-click="FavoriteList.changeSortOrder(true)"><i class="caret up icon"></i></a>
+					&nbsp;Salary per month&nbsp;
+					<a href ng-click="FavoriteList.changeSortOrder(false)"><i class="caret down icon"></i></a>
+				</th>
+				<th>Operation</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="ui form" id="search" ng-init="FavoriteList.initSearch()">
+				<td></td>
+				<td class="field" ng-repeat="s in FavoriteList.searchOptions" ng-if="!FavoriteList.divideType(s)">
+					<div class="ui compact selection dropdown">
+						<input name="{{s}}" ng-model="FavoriteList.sJob[s]" type="hidden">
+						<div class="default text">{{s}}</div>
+						<div class="menu">
+							<div class="item" data-value="" ng-click="FavoriteList.getSelectValue('search', s, '')">--</div>
+							<div class="item" data-value="{{data}}" ng-repeat="data in FavoriteList.selectionData[s]" ng-click="FavoriteList.getSelectValue('search', s, data)" on-finish-render="triggerDropdown">{{data}}</div>
+						</div>
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						<input name="experience" ng-model="FavoriteList.sJob.experience" type="number" min="0" placeholder="experience">
+					</div>
+				</td>
+				<td class="field">
+					<div class="ui input">
+						<input name="salary" ng-model="FavoriteList.sJob.salary" type="number" min="0" placeholder="salary">
+					</div>
+				</td>
+				<td>
+					<div class="ui buttons">
+						<div class="ui animated fade black button" ng-click="FavoriteList.initSearch()">
+							<div class="visible content"><i class="undo icon"></i></div>
+							<div class="hidden content">Reset</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+			<tr class="ui form" id="favoriteList" name="jL" ng-repeat="job in FavoriteList.jobs | filter:FavoriteList.search(FavoriteList.sJob) | orderBy:FavoriteList.sortOrder"">
+				<td class="center aligned">{{job.id}}</td>
+				<!-- No Login -->
+				<td class="center aligned" ng-repeat="(k, v) in job" ng-if="FavoriteList.divide(k)">{{v}}</td>
+				<td>
+					<div class="ui buttons">
+						<div ng-hide="job.apply">
+							<div class="ui animated fade button" ng-class="FavoriteList.setToggle(job.favorite)" ng-click="FavoriteList.setFavorite($index, job.id)" >
+								<div class="visible content"><i class="star icon"></i></div>
+								<div class="hidden content">
+									<span ng-show="!job.favorite">Star</span>
+									<span ng-show="job.favorite">Un Star</span>
+								</div>
+							</div>
+							<div class="ui animated fade button" ng-click="FavoriteList.setApply($index, job.id)">
+								<div class="visible content"><i class="checkmark icon"></i></div>
+								<div class="hidden content">Apply</div>
+							</div>
+						</div>
+						<div ng-show="job.apply">
+							<div class="ui animated fade button" ng-class="FavoriteList.setToggle(job.favorite)" ng-click="FavoriteList.setFavorite($index, job.id)" >
+								<div class="visible content"><i class="star icon"></i></div>
+								<div class="hidden content">
+									<span ng-show="!job.favorite">Star</span>
+									<span ng-show="job.favorite">Un Star</span>
+								</div>
+							</div>
+							<div class="ui animated fade button" ng-click="FavoriteList.setApply($index, job.id)">
+								<div class="visible content"><i class="radio icon"></i></div>
+								<div class="hidden content">Wait</div>
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

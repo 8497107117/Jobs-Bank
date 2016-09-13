@@ -4,21 +4,63 @@
 body {
 	position: relative;
 }
+
 .container {
 	padding-top: 50px;
 	margin: auto;
 }
-.template {
+
+.view {
 	padding-top: 50px;
 }
-.template#login {
+.view .fields, .view .three.fields{
+	padding-top: 30px;
+}
+/* login */
+.view#login {
 	max-width: 25%;
 	margin: auto;
 }
-.template .login.input {
+.view#login .ui.message{
+	text-align: center;
+}
+.view .login.input {
 	padding-top: 10px;
 }
-.template .login.enter {
+.view .login.enter {
+	text-align: center;
+	width: 100%;
+}
+/* register */
+.view#register{
+	max-width: 75%;
+	margin: auto;
+}
+.view#register .ui.message{
+	text-align: center;
+	width: 100%;
+	margin: 1em auto;
+}
+.view .register.enter{
+	padding-top: 40px;
+	text-align: center;
+	width: 100%;
+}
+/* jobsList, usersList, myJobsList, favoriteList*/
+.view#jobsList, .view#usersList, .view#myJobsList, .view#favoriteList {
+	max-width: 80%;
+	margin: auto;
+}
+.view#jobsList .input.experience {
+	padding-top: 10px;
+	width: 60%;
+}
+.view#jobsList .input.salary {
+	padding-top: 10px;
+	width: 80%;
+}
+.view .post.enter {
+	padding-top: 10px;
 	text-align: center;
 	width: 100%;
 }
