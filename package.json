@@ -19,6 +19,5 @@
   "homepage": "https://github.com/8497107117/Jobs-Bank#readme",
   "dependencies": {
     "webpack": "^1.13.2",
-    "webpack-uglify-js-plugin": "^1.1.9"
   }
 }
