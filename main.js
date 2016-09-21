@@ -17,4 +17,4 @@ require('./app/boss/usersList/usersList.controller.js');
 require('./app/user/favoriteList/favoriteList.controller.js');
 require('./app/directive.js');
 
-require('./css/style.css');
+require('./css/main.scss');

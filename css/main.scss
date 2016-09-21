@@ -1,0 +1,95 @@
+$padding-unit: 10px;
+$width-unit: 20%;
+
+.ui {
+	&.center {
+		text-align: center;
+	}
+}
+body {
+	position: relative;
+}
+.container {
+	padding-top: ($padding-unit*5);
+	margin: auto;
+}
+.view {
+	padding-top: ($padding-unit*5);
+	.fields {
+		padding-top: ($padding-unit*3);
+	}
+	.three {
+		&.fields {
+			padding-top: ($padding-unit*3);
+		}
+	}
+	&#login {
+		max-width: ($width-unit*1.5);
+		margin: auto;
+		.ui {
+			&.message {
+				text-align: center;
+			}
+		}
+	}
+	.login {
+		&.input {
+			padding-top: $padding-unit;
+		}
+		&.enter {
+			text-align: center;
+			width: ($width-unit*5);
+		}
+	}
+	&#register {
+		max-width: ($width-unit*4);
+		margin: auto;
+		.ui {
+			&.message {
+				text-align: center;
+				width: ($width-unit*5);
+				margin: 1em auto;
+			}
+		}
+	}
+	.register {
+		&.enter {
+			padding-top: ($padding-unit*4);
+			text-align: center;
+			width: ($width-unit*5);
+		}
+	}
+	&#jobsList {
+		max-width: ($width-unit*4);
+		margin: auto;
+		.input {
+			&.experience {
+				padding-top: $padding-unit;
+				width: ($width-unit*3);
+			}
+			&.salary {
+				padding-top: $padding-unit;
+				width: ($width-unit*4);
+			}
+		}
+	}
+	&#usersList {
+		max-width: ($width-unit*4);
+		margin: auto;
+	}
+	&#myJobsList {
+		max-width: ($width-unit*4);
+		margin: auto;
+	}
+	&#favoriteList {
+		max-width: ($width-unit*4);
+		margin: auto;
+	}
+	.post {
+		&.enter {
+			padding-top: $padding-unit;
+			text-align: center;
+			width: ($width-unit*5);
+		}
+	}
+}
